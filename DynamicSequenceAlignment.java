@@ -1,1 +1,6 @@
-//Bruh
+public class DynamicSequenceAlignment(){
+
+
+
+
+}
