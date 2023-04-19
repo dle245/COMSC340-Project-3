@@ -1,6 +1,9 @@
-public class DynamicSequenceAlignment(){
-
-
-
+public class DynamicSequenceAlignment{
+  static void sequenceAligment(){
+  
+  
+  
+  
+  }
 
 }
