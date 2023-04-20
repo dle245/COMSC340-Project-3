@@ -14,7 +14,7 @@ public class App {
         } else if (j == seq2.length){
             return 2 * ((seq1.length - i));
         } else {
-            if (seq1[i].equals(seq1[j])){
+            if (seq1[i].equals(seq2[j])){
                 penalty = 0;
             } else {
                 penalty = 1;
