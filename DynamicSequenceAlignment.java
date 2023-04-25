@@ -1,7 +1,8 @@
+
 public class DynamicSequenceAlignment {
 
-	static String[] x = {"A","A","C","A","G","T","T","A","C","C","-"}; 
-	static String[] y = {"T","A","A","G","G","T","C","A","-"};
+	static String[] x = {"A","A","C","A","G","T","T","A","C","C"}; 
+	static String[] y = {"T","A","A","G","G","T","C","A"};
 	static int m = x.length;
 	static int n = y.length;
 	
@@ -19,13 +20,13 @@ public class DynamicSequenceAlignment {
 	public static int[][] optimalCost() {
 		int[][] matrix = new int[m+1][n+1];
 		
-		for(int i = m; i > 0; i--) {
-			for (int j = n; j > 0; j--) {
+		for(int i = m; i >= 0; i--) {
+			for (int j = n; j >= 0; j--) {
 				if (i == m) {
-					matrix[i][j] = checkRight(i,j);
+					matrix[i][j] = checkRightColumn(i,j);
 				}
-				if (j == n) {
-					matrix[i][j] = checkBottom(i,j);
+				else if (j == n) {
+					matrix[i][j] = checkBottomRow(i,j);
 				}
 				else {
 					matrix[i][j] = checkElse(i,j, matrix);
@@ -37,25 +38,25 @@ public class DynamicSequenceAlignment {
 		
 	}
 	
-	public static int checkRight(int i, int j) { //Checks the right most column
+	public static int checkRightColumn(int i, int j) { //Checks the right most column
 		return 2*(n-j);
 	}
 	
-	public static int checkBottom(int i, int j) { //Checks the bottom most row
+	public static int checkBottomRow(int i, int j) { //Checks the bottom most row
 		return 2*(m-i);
 	}
 	
 	public static int checkElse(int i, int j, int[][] matrix){ //Checks everything else
 		int penalty;
-		if (x[i-1]==y[j-1]) {
+		if (x[i]==y[j]) {
 			penalty = 0;
 		}
 		else {
 			penalty = 1;
 		}
-        int sum1 = matrix[i][j] + penalty;
+        int sum1 = matrix[i+1][j+1] + penalty;
     	int sum2 = matrix[i][j+1] + 2;
-    	int sum3 = matrix[i][j] + 2;
+    	int sum3 = matrix[i+1][j] + 2;
         return min_cost(sum1, sum2, sum3);  
     }
 	
