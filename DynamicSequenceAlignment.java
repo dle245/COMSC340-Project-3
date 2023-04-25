@@ -15,6 +15,16 @@ public class DynamicSequenceAlignment {
         	}
         	System.out.println();
         }
+        System.out.println();
+        String[][] answer = new String[10][10];
+        answer = sequenceAlignment(example);
+        for (int i = 0; i < m; i++) { //Prints out the result
+        	System.out.println(answer[i][0]);
+        }
+        System.out.println();
+        for (int i = 0; i < m; i++) { //Prints out the result
+        	System.out.println(answer[i][1]);
+        }
     }
 	
 	public static int[][] optimalCost() {
@@ -70,5 +80,38 @@ public class DynamicSequenceAlignment {
         }
 
     }
+	
+	static String[][] sequenceAlignment (int[][] matrix) {
+		String[][] result = new String[11][2];
+		for (int i = 0; i <= m-1; i++) {
+			int j = 0;
+			result[0][0] = x[i];
+			result[0][1] = y[j];
+			int penalty;
+			if (x[i]==y[j]) {
+				penalty = 0;
+			}
+			else {
+				penalty = 1;
+			}
+	        int sum1 = matrix[i+1][j+1] + penalty;
+	    	int sum2 = matrix[i][j+1] + 2;
+	    	int sum3 = matrix[i+1][j] + 2;
+	    	
+	        if (sum1 == matrix[i][j]) {
+	        	result[j+1][1] = "-";
+	        	j++;
+	        }
+	        else if (sum2 == matrix[i][j]) {
+	        	result[j+1][0] = "-";
+	        	j++;
+	        }
+	        else {
+	        	result[j+1][1] = y[j+1];
+	        }
+	        j++;
+		}
+		return result;
+	}
 	
 }
