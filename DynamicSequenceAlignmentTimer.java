@@ -1,5 +1,5 @@
 import java.util.Arrays;
-public class DynamicSequenceAlignment {
+public class DynamicSequenceAlignmentTimer {
 static String[] x = {"A","A","C","A","G","T","T","A","C","C"}; 
 	static String[] y = {"T","A","A","G","G","T","C","A"};
 	static int m = x.length;
