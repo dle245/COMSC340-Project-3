@@ -1,3 +1,4 @@
+import java.util.Arrays;
 
 public class DynamicSequenceAlignment {
 
@@ -5,19 +6,27 @@ public class DynamicSequenceAlignment {
 	static String[] y = {"T","A","A","G","G","T","C","A"};
 	static int m = x.length;
 	static int n = y.length;
+	static String[] topAlignment = new String[m];
+	static String[] bottomAlignment = new String[m];
 	
 	public static void main(String[] args) throws Exception { //Main method
-        int[][] example;
-        example = optimalCost();
-        for (int i = 0; i < m+1; i++) { //Prints out the result
+        int[][] optimalCostArray;
+        optimalCostArray = optimalCost();
+        for (int i = 0; i < m+1; i++) { //Prints out the minimum cost matrix
         	for (int j = 0; j < n+1; j++) {
-        		System.out.print(example[i][j] + " ");
+        		System.out.print(optimalCostArray[i][j] + " ");
         	}
         	System.out.println();
         }
+        System.out.println();
+        sequenceAlignment(optimalCostArray); //Assembling and printing out the alignment sequence
+        System.out.println(Arrays.toString(topAlignment));
+        System.out.println(Arrays.toString(bottomAlignment));
+        
     }
+    
 	
-	public static int[][] optimalCost() {
+	public static int[][] optimalCost() { //Generates the minimal cost matrix
 		int[][] matrix = new int[m+1][n+1];
 		
 		for(int i = m; i >= 0; i--) {
@@ -57,6 +66,7 @@ public class DynamicSequenceAlignment {
         int sum1 = matrix[i+1][j+1] + penalty;
     	int sum2 = matrix[i][j+1] + 2;
     	int sum3 = matrix[i+1][j] + 2;
+    	
         return min_cost(sum1, sum2, sum3);  
     }
 	
@@ -71,4 +81,34 @@ public class DynamicSequenceAlignment {
 
     }
 	
+	static void sequenceAlignment (int[][] matrix) { //Assembles the alignment sequence
+		for (int i = 0; i <= m-1; i++) {
+			topAlignment[i] = x[i]; 
+			for (int j = 0; j <= n-1; j++) {
+				
+				int penalty;
+				if (x[i]==y[j]) {
+					penalty = 0;
+				}
+				else {
+					penalty = 1;
+				}
+				
+				int sum1 = matrix[i][j+1] + 2;
+				int sum2 = matrix[i+1][j] + 2;
+				int sum3 = matrix[i+1][j+1] + penalty;
+				
+				if (sum1 == matrix[i][j]) {
+					bottomAlignment[i] = "-";
+				}
+				else if (sum2 == matrix[i][j]) {
+					bottomAlignment[i] = "-";
+				}
+				else {
+					bottomAlignment[j] = y[j];
+				}
+				
+			}
+		}
+	}
 }
